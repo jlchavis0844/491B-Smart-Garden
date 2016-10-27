@@ -1,0 +1,1 @@
+{"updated": "2017-10-24 13:14:15","password": "password1","user": "testUser","Gardens": {"Garden1": [{"TempNames": ["Sensor0", "Sensor1", "Sensor2"]}, {"TempChan": ["19", "17", "6"]}, {"MoistNames": ["moist0"]}, {"MoistChan": ["0"]}, {"MoistLimit": ["322"]}]}}

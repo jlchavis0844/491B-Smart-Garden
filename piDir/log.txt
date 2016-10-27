@@ -1,0 +1,16 @@
+&name=Sensor0&temp=24.0&hum=48.0 reading accepted 2016-10-25 05:43:38
+&name=Sensor1&temp=26.0&hum=61.0 reading accepted 2016-10-25 05:43:38
+&name=Sensor2&temp=21.0&hum=60.0 reading accepted 2016-10-25 05:43:38
+&name=moist0&moisture=0 reading accepted 2016-10-25 05:43:38
+&name=Sensor0&temp=24.0&hum=47.0 reading accepted 2016-10-25 07:08:46
+&name=Sensor1&temp=26.0&hum=60.0 reading accepted 2016-10-25 07:08:46
+&name=Sensor2&temp=21.0&hum=57.0 reading accepted 2016-10-25 07:08:46
+&name=moist0&moisture=0 reading accepted 2016-10-25 07:08:46
+&name=Sensor0&temp=24.0&hum=48.0 reading accepted 2016-10-25 20:18:56
+&name=Sensor1&temp=24.0&hum=60.0 reading accepted 2016-10-25 20:18:56
+&name=Sensor2&temp=20.0&hum=57.0 reading accepted 2016-10-25 20:18:56
+&name=moist0&moisture=0 reading accepted 2016-10-25 20:18:56
+&name=Sensor0&temp=23.0&hum=47.0 reading accepted 2016-10-25 21:23:09
+&name=Sensor1&temp=24.0&hum=59.0 reading accepted 2016-10-25 21:23:09
+&name=Sensor2&temp=20.0&hum=54.0 reading accepted 2016-10-25 21:23:09
+&name=moist0&moisture=0 reading accepted 2016-10-25 21:23:09
