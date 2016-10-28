@@ -10,7 +10,7 @@ import sys, os
 headers = { "charset" : "utf-8", "Content-Type": "application/json" }
 path = os.path.dirname(os.path.dirname(sys.argv[0]))
 filename = os.path.join(path, 'config.json')
-  
+#print(path)
 url = '76.94.123.147:49180'
   
 conn = httplib.HTTPConnection(url)
@@ -27,7 +27,9 @@ conn.request("POST", "/JSONread.php", data, headers)
 #request = urllib2.Request(url, data, headers)
 #response = urllib2.urlopen(request)
 
-response = conn.getresponse();
-
-print(response.read())
+response = conn.getresponse()
+respJson = json.load(response)
+if respJson['status'] != "200 OK":
+	print(" " + respJson['error'])
+	
 conn.close()
