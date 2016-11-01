@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html ng-app = "myApp">
+    <head>
+        <title>Resilient Smart Gardens</title>
+
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+        <link rel="stylesheet" type="text/css" href="./css/spinner.css">
+        <link rel="stylesheet" type="text/css" href="./libs/nv.d3.min.css">
+        <link rel="stylesheet" type="text/css" href="./libs/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="./css/styles.css">
+        <link rel="stylesheet" type="text/css" href="./libs/rzslider.css">
+        <!-- This is the stylesheet part. This affect the user interface-->
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="./images/RSGlogo.png">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <!-- This program's library will run the website to get it. -->
+
+        <script src="libs/d3.min.js"></script>
+        <script src="libs/pubnub-3.7.14.min.js"></script>
+        <script src="libs/underscore-min.js"></script>
+        <script src="libs/nv.d3.min.js"></script>
+        <script src="libs/angular-nvd3.js"></script>
+        <script src="libs/moment.min.js"></script>
+        <script src="libs/ui-bootstrap-tpls-0.14.3.js"></script>
+        <script src="libs/rzslider.js"></script>
+        <script src="libs/raphael-2.1.4.min.js"></script>
+        <script src="libs/justgage-1.1.0.min.js"></script>
+        <script src="libs/angular-gage.min.js"></script>
+
+
+        <script src="app/app.js"></script>
+
+
+        <script src="./directives/ajaxLoader.js" type="text/javascript"></script>
+
+        <script src="./controllers/mainController.js"></script>
+        <script src="./controllers/CommunityGardenController.js"></script>
+        <script src="./controllers/EditPlantController.js"></script>
+        <script src="./controllers/HomeController.js"></script>
+        <script src="./controllers/MyGardenController.js"></script>
+        <script src="./controllers/ReportsController.js"></script>
+        <script src="./controllers/SignUpController.js"></script>
+        <!-- ^ This is the Controller last project give me-->
+        <script src="./controllers/dataTransferController.js"></script>
+        <script src="./controllers/graphController.js"></script>
+
+        <script src="./services/loginService.js"></script>
+        <script src="./services/requestService.js"></script>
+        <script src="./services/sessionService.js"></script>
+
+
+        <script src="./js/constants.js"></script>
+        <script src="./js/config.js"></script>
+
+
+
+    </head>
+
+
+    <body>
+        <div ng-app="myApp" ng-controller="mainController">
+                    <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="nav-container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <img class="navbar-brand page-scroll" src="./images/RSGlogo.png" />
+                        <a class="navbar-brand page-scroll" href="#page-top">Resilient Smart Garden</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div class="nav navbar-nav navbar-right">
+                            <button ng-if="loggedIn()" class="btn btn-1 btn-1a" ng-click="clickLink('#/MyGarden')">
+                                My<b>Garden</b>
+                            </button>
+                            <button class="btn btn-1 btn-1a" ng-click="clickLink('#/About')">
+                                About<b>RSG</b>
+                            </button>
+                            <button class="btn btn-1 btn-1a" ng-click="clickLink('#/Support')">
+                                Garden<b>Support</b>
+                            </button>
+                            <button class="btn btn-1 btn-1a" ng-click="clickLink('#/Graph')">
+                                Statistics<b>Report</b>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.nav-container -->
+            </nav>
+        </div>
+
+        <div class="container">
+            <div ng-view></div>
+        </div>
+            <div loading="" ng-include="'views/partials/spinner.html'" ></div>
+    </body>
+</html>
