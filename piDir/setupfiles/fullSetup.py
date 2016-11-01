@@ -13,6 +13,7 @@ import setupfiles.gardenSetup #garden and senor setup
 import setupfiles.register #user name setup
 import Adafruit_Python_DHT.ez_setup #tempSensor setup files
 import Adafruit_Python_MCP3008.ez_setup #for the D to A ship for moisture sensors
+import Adafruit_Python_GPIO.ez_setup
 
 
 # adds sensors to the online database with the given parameters
@@ -40,6 +41,8 @@ def installFiles(setUpCmd):
     Adafruit_Python_DHT.ez_setup.main()
     print('installing MCP files')
     Adafruit_Python_MCP3008.ez_setup.main()
+    print('installing GPIO files')
+    Adafruit_Python_GPIO.ez_setup.main()
     
     # this is included to give the option of just running the library setups
     if setUpCmd != "False":# anything but false
@@ -114,6 +117,8 @@ def fullSetup():
     #with open("config.json", "r") as f:
         #data = json.load(f)
     #print(data)
-    
+    answer = raw_input("would you like to schedule readings to be taken automatically?")
+    if (answer in goodAnswers): 
+        setupfiles.timer.scheduleJob()
+        
     return data
-
