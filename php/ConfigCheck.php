@@ -63,7 +63,7 @@ while ( $row = mysqli_fetch_array ( $result, MYSQLI_ASSOC ) ) {
 	$myArray [] = $row;
 }
 
-if ($myArray[0]['configTime'] < $gDate){
+if ($myArray[0]['configTime'] <= $gDate){
 	echo json_encode(array());
 } else {
 	echo json_encode($myArray[0]['configText']);
