@@ -1,0 +1,36 @@
+<h1>See the Graph</h1>
+<form class="pure-form pure-form-aligned" onclick="myfunction()">
+    <fieldset>
+        <div class="pure-control-group">
+            <label>User Name</label>
+            <input name="user" required ng-model="username" placeholder="User name" type="text" id="user"/>
+        </div>
+        <div class="pure-control-group">
+            <label>Password</label>
+            <input name="password" ng-model="password" placeholder="Password" type="password" id="password"/>
+        </div>
+        <div class="pure-control-group">
+            <label>Garden</label>
+            <input name="name" ng-model="name" placeholder="Garden name" type="text" id="name"/>
+        </div>
+        <div class = "pure-control-group">
+            <label>Date</label>
+            <input name="max" ng-model="Date" type="date" id="date">
+        </div>
+        <div class = "pure-control-group">
+            <label>Peroid</label>
+            <input type="radio" name="period" value = "Year" checked>Year<br>
+            <label></label>
+            <input type="radio" name="period" value = "Month">Month<br>
+            <label></label>
+            <input type="radio" name="period" value = "Week">Week<br>
+        </div>
+
+        <div class="pure-controls">
+            <button type="submit" class="btn btn-2 btn-2a" onclick="getReportFunction('things')">Submit!</button>
+        </div>
+    </fieldset>
+
+</form>
+
+<p id="things">A Paragraph.</p>
