@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 '''
 Created on Oct 31, 2016
+
 @author: James
 '''
 import os #for path finding
@@ -33,7 +34,6 @@ def scheduleJob():
     else:
         print("Aleady configured to take the following readings")
         print("min hr * * * command")
-        currentjobs = cron.find_command('takeReadings')
         for job in currentjobs:
             print(job)
         
@@ -50,41 +50,57 @@ def scheduleJob():
 def makeJobs():
     cron = CronTab(user=True)
     print("Scheduling automatic readings twice daily")
-
-    for i in range(2):
-        cont = False
-        while(cont == False):
-            hour = raw_input("For this reading, enter the hour in military time (0-23)\n")
-            cont = is_number(hour)
-            if(not cont):
-                print("Please enter a valid number")
-            else:
-                hour = int(hour)
-                if(hour < 0 or hour > 23):
-                    print("Please enter between 0 and 23")
-                    cont = False
-
-        cont = False
-        while(cont == False):
-            min = raw_input("For this reading, enter the minute (0 - 59)\n")
-            cont = is_number(min)
-            if(cont == False):
-                print("Please enter a valid number")
-            else:
-                min = int(min)
-                if(min < 0 or min > 59):
-                    print("Please enter between 0 and 59")
-                    cont = False
-
-        cont = False
     
-        print("scheduling readings for daily at " + str(hour) + ":" + str(min))
+    cont = False
+    while(cont == False):
+        hour = raw_input("For the first reading, enter the hour in military time (0-23)\n")
+        cont = is_number(hour)
+        if(not cont):
+            print("Please enter a valid number")
+            cont = False
+        hour = int(hour)
+        if(hour < 0 or hour > 23):
+            print("Please enter between 0 and 23")
+            cont = False
+    cont = False
+    
+    while(cont == False):
+        min = raw_input("For the first reading, enter the minute (0 - 59)\n")
+        cont = is_number(min)
+        if(not cont):
+            print("Please enter a valid number")
+            cont = False
+        min = int(min)
+        if(min < 0 or min > 59):
+            print("Please enter between 0 and 59")
+            cont = False
+
+    cont = False
+    
+    while(cont == False):
+        interval = raw_input("Interval between first and second readings in hours (usually 12)\n")
+        cont = is_number(interval)
+        if(not cont):
+            print("Please enter a valid number")
+            cont = False
         
-        command = os.getcwd() + "/takeReadings.py"
-        print("setting the following command: " + command)
-     
-        time = str(min) + " " + str(hour) + " * * *"
-        job = cron.new(command)
-        job.setall(time)
-        cron.write()
-        print('*************************Done scheduling**************************')
+        interval = int(interval)
+        if(interval < 1 or interval > 12):
+            print("Please enter a valid number")
+            cont = False
+
+    print("scheduling readings for daily at " + str(hour) + ":" + str(min))
+    print("and " + str(hour + interval ) + ":" + str(min))
+    
+    command = os.getcwd() + "/takeReadings.py"
+    print("setting the following command: " + command)
+ 
+    time = str(min) + " " + str(hour) + " * * *"
+    job = cron.new(command)
+    job.setall(time)
+    cron.write()
+    
+    time = str(min) + " " + str(hour + interval) + " * * *"
+    job = cron.new(command)
+    job.setall(time)
+    cron.write()

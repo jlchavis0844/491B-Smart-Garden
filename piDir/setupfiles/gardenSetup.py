@@ -1,8 +1,20 @@
 #this file will take input from the user to get sensor names and channels
 #this will return two lists, the moisture sensor name list and the channel list
 #return sensorName list then sesorChan list
+import json, urllib2, datetime
+import setupfiles
 
 GardenName = ""
+
+# writes the garen given to the online database
+def sendGarden(gUser, gPass, gName, gDesc):
+    urlBaseS = 'http://76.94.123.147:49180/addGarden.php?user=' \
+            + gUser + '&password=' + gPass + '&gName=' + gName.replace(" ", "%20") \
+            + '&gDesc=' + gDesc.replace(" ", "%20")
+    resp = urllib2.urlopen(urllib2.Request(urlBaseS))
+    
+    print resp.read(); # return the reponse from the PHP (should be encoded as a JSON
+
 
 # set the moisture sensors for this garden
 def moistSetup():
@@ -59,5 +71,50 @@ def makeGarden():
     moistNames, moistChan, moistLimit = moistSetup()
     return GardenName, tempName, tempChan, moistNames, moistChan, moistLimit, gDesc
 
-#print(makeGarden())
+def addGarden():
+    data = {}
+    tempNames= {}
+    tempChan= {}
+    moistNames= {}
+    moistChan={}
+    moistLimit = {}
+    garden ={}
+    gName, tempNames, tempChan, moistNames, moistChan, moistLimit, gDesc = makeGarden()
+    
+    with open("config.json", "r") as f:
+        data = json.load(f)
+    
+    user = data["user"]
+    password = data["password"]
+    data["updated"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    garden = data["Gardens"]
+    
+    # write the keys and values to the json
+    garden[gName] = [{"TempNames" : tempNames},\
+                    {"TempChan" :  tempChan},\
+                    {"MoistNames" : moistNames},\
+                    {"MoistChan" : moistChan},\
+                    {"MoistLimit" : moistLimit}]
+    data["Gardens"] = garden
+    sendGarden(user, password, gName, gDesc)
+    
+    #send the garden to the SQL server
+    if(gName != None):
+        makeGarden(user, password, gName, gDesc)
+        
+    #if the temp sensors list isn't empty, send those to the SQL database
+    if(len(tempNames) > 0):
+        for x in range(0, len(tempNames)):
+            setupfiles.fullSetup.sendSensor(user, password, tempNames[x], gName)
+        
+    #if there are moisture sensors in the list, write them to the SQL database
+    if(len(moistNames) > 0):
+        for x in range(0, len(moistNames)):
+            setupfiles.fullSetup.sendSensor(user, password, moistNames[x], gName)
+            
+    #write to a JSON file    
+    with open("config.json", "w") as f:
+        json.dump(data, f)
+    
+#addGarden()
     

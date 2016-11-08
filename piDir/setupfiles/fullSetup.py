@@ -36,13 +36,21 @@ def makeGarden(gUser, gPass, gName, gDesc):
 
 # installs the Adafruit drivers to this machine
 # if setUpCmd is anything but "False", the method also calls the fullStep() method
-def installFiles(setUpCmd):
+def installOnlineFiles(setUpCmd):
     print('installing DHT files')
     Adafruit_Python_DHT.ez_setup.main()
     print('installing MCP files')
     Adafruit_Python_MCP3008.ez_setup.main()
     print('installing GPIO files')
     Adafruit_Python_GPIO.ez_setup.main()
+    
+def installLocalFiles(setUpCmd):
+    print('installing DHT files')
+    import Adafruit_Python_DHT.setup
+    print('installing MCP files')
+    import Adafruit_Python_MCP3008.setup
+    print('installing GPIO files')
+    import Adafruit_Python_GPIO.setup
     
     # this is included to give the option of just running the library setups
     if setUpCmd != "False":# anything but false
@@ -78,7 +86,7 @@ def fullSetup():
         garden[gName] = [{"TempNames" : tempNames},\
                         {"TempChan" :  tempChan},\
                         {"MoistNames" : moistNames},\
-                        {"MoistChan" : moistChan},
+                        {"MoistChan" : moistChan}, \
                         {"MoistLimit" : moistLimit}]
         
         #print(garden)
@@ -122,3 +130,4 @@ def fullSetup():
         setupfiles.timer.scheduleJob()
         
     return data
+

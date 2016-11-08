@@ -12,31 +12,31 @@ import json # for sending data
 import urllib2 #for php calls
 import Config 
 import simplejson
-
+global myConf
 myConf= Config.Config() # load configuration file
 
 def configCheck():
-	url = "http://jchavis.hopto.org:49180/ConfigCheck.php?user="+ myConf.getUser()
-	url += "&password="+ myConf.getPassword() + "&localDate=" 
-	#url += myConf.getUpdateDate().replace(" ", "%20")
-	url += "2016-10-17 13:14:15".replace(" ", "%20")
+    url = "http://jchavis.hopto.org:49180/ConfigCheck.php?user="+ myConf.getUser()
+    url += "&password="+ myConf.getPassword() + "&localDate=" 
+    #url += myConf.getUpdateDate().replace(" ", "%20")
+    url += "2016-10-17 13:14:15".replace(" ", "%20")
 
-	print('calling ' + url)
-	resp = urllib2.urlopen(urllib2.Request(url))#make PHP call
-	#print(resp.read())
-	json_data = json.load(resp)
-	print(json_data)
+    print('calling ' + url)
+    resp = urllib2.urlopen(urllib2.Request(url))#make PHP call
+    #print(resp.read())
+    json_data = json.load(resp)
+    print(json_data)
 
-	if(json_data):
-		print("New JSON found, saving...")
-		with open("config.json", "w") as f:
-			f.write(json_data)
+    if(json_data):
+        print("New JSON found, saving...")
+        with open("config.json", "w") as f:
+            f.write(json_data)
 
-		global myConf
-		myConf = Config.Config()
+        global myConf
+        myConf = Config.Config()
 
-	else:
-		print("no new data")
+    else:
+        print("no new data")
 
 configCheck()
 #DHT declerations
@@ -100,9 +100,9 @@ def getMoist(index): #;0)
     moistChans = myConf.getMoistChan(index)
 
     for x in moistChans:
-    	print "trying to read " + x
-    	moisture = invert(mcp.read_adc(int(x)))#get readings
-    	moistReadings.append(moisture)#store to end of list
+        print "trying to read " + x
+        moisture = invert(mcp.read_adc(int(x)))#get readings
+        moistReadings.append(moisture)#store to end of list
 
 #writes the given line to the log file
 def writeToLog(writeData):
