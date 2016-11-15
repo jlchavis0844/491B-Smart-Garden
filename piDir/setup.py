@@ -35,8 +35,12 @@ elif(answer == "2"):
     setupfiles.fullSetup.installLocalFiles("True")
 elif(answer == "3"):
     setupfiles.fullSetup.fullSetup()
-elif (answer == "4"):
+elif(answer == "4"):
     setupfiles.gardenSetup.addGarden()
+elif(answer == "5"):
+	setupfiles.gardenSetup.removeGarden()
+elif(answer == "6"):
+	//setupfiles.garden
 else:
     print("invalid input")
     

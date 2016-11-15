@@ -17,7 +17,7 @@ class Config:
         self.moistLimit = []
         self.listOfLists = []
         tempList = []
-        
+        print (os.path.dirname(os.path.dirname(sys.argv[0])))
         with open(os.path.dirname(os.path.dirname(sys.argv[0])) + "\\config.json", "r") as f:
             self.data = json.load(f)
             
@@ -187,10 +187,3 @@ class Config:
     #returns JSON as a string
     def getJSONString(self):
         return json.dumps(self.data)
-
-        
-test = Config()
- 
-print test.getJSONString()
-
-    
