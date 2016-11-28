@@ -1,1 +1,5 @@
-{"updated": "2017-10-24 13:14:15","password": "password1","user": "testUser","Gardens": {"Garden1": [{"TempNames": ["Sensor0", "Sensor1", "Sensor2"]}, {"TempChan": ["19", "17", "6"]}, {"MoistNames": ["moist0"]}, {"MoistChan": ["0"]}, {"MoistLimit": ["322"]}]}}
+{"updated": "2016-11-07 21:28:03", "password": "test", "user": "testUser3", 
+"Gardens": {
+	"Garden2": [{"TempNames": ["t5", "t6"]}, {"TempChan": ["5", "6"]}, {"MoistNames": ["m5", "m6"]}, {"MoistChan": ["5", "6"]}, {"MoistLimit": ["333", "444"]}], 
+	"Garden1": [{"TempNames": ["t1", "t2"]}, {"TempChan": ["1", "2"]}, {"MoistNames": ["m1", "m2"]}, {"MoistChan": ["1", "2"]}, {"MoistLimit": ["900", "915"]}
+	]}}

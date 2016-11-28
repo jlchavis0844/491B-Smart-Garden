@@ -33,7 +33,83 @@ def sendGarden(gUser, gPass, gName, gDesc):
     
     print resp.read();  # return the response from the PHP (should be encoded as a JSON
 
+    # this functyion will open config, walkthrough adding a sensor to a garden and then send the new config and SQL the sensor
+def addNewSensor(type):
+    # open the config and load as a json
+    with open("config.json", "r") as f:
+        data = json.load(f)
 
+    # set current garden by asking user
+    garden = data["Gardens"]
+    print("which garden would you like to add a sensor to?\n")
+    gKeys = garden.keys()
+    keyNum = len(gKeys)
+    for x in range(len(gKeys)):
+        print(str(x) + "- " + gKeys[x])
+        
+    # should be 0 - len(gKeys)
+    print('please enter the number of the garden you want\n')  
+    answer = raw_input('>>> ')
+    # check for invalid input
+    while(valid_input(answer, keyNum) == False):  # if input is not valid
+        print('invalid input, please enter the number of the garden you want\n')
+        answer = raw_input('>>> ')  # get input again
+        
+    choice = gKeys[int(answer)]  # choice is the name of the garden we ar working with
+    garden = data['Gardens'][choice]  # load garden as a list
+    
+    if(type == "moist"):  # if the setup if for a moisture sensor
+        names = garden['MoistNames']
+        chans = garden['MoistChan']  # if for a temp sensor
+        names = garden['TempNames']
+        chans = garden['TempChan']
+    
+    # get the sensor name
+    print('please enter the name of the sensor\n')  
+    sName = raw_input('>>> ')
+    names.append(sName)
+    
+    # get the sensor channel
+    print('please enter the channel of the sensor\n')  
+    sChan = raw_input('>>> ')
+        
+    while(valid_input(sChan, 99) == False):
+        print('invalid input, please enter the number of the channel\n')
+        sChan = raw_input('>>> ')
+    
+    chans.append(sChan)
+    
+    # if this is a moisture sensor, get limit
+    if(type == "moist"):
+        limit = garden['MoistLimit']
+        print('please enter the limit of the sensor\n')  
+        mLimit = raw_input('>>> ')
+        
+        while(valid_input(mLimit, 1023) == False):
+            print('invalid input, please enter the limit of the sensor\n')
+            mLimit = raw_input('>>> ')
+        
+        limit.append(mLimit)
+        garden['MoistLimit'] = limit
+        garden['MoistNames'] = names
+        garden['MoistChan'] = chans
+    else:
+        garden['TempNames'] = names
+        garden['TempChan'] = chans
+    
+    data['Gardens'][choice] = garden
+    
+    with open("config.json", "w") as f:
+        json.dump(data, f)
+    
+    if(sendJSON(data)):
+        print('sending json worked')
+    else:
+        print('sending json failed')
+        
+    setupfiles.fullSetup.sendSensor(data['user'], data['password'], sName, choice)
+    print("done with adding the sensor")
+    
 # set the moisture sensors for this garden
 def moistSetup():
     # instantiate the lists to hold the moisture sensor values
@@ -110,7 +186,7 @@ def removeGarden():
     for x in range(len(gKeys)):
         print(str(x) + "- " + gKeys[x])
     
-    print('invalid input, please enter the number of the garden you want\n')  
+    print('please enter the number of the garden you want\n')  
     answer = raw_input('>>> ')
     
     while(valid_input(answer, keyNum) == False):
@@ -188,4 +264,4 @@ def addGarden():
         json.dump(data, f)
     
 # addGarden()
-#removeGarden()
+# removeGarden()

@@ -1,17 +1,24 @@
-import os.path #file check
+import os.path  # file check
 import setupfiles.fullSetup
-from subprocess import call
-from Queue import Full
-from setupfiles.fullSetup import fullSetup
+import setupfiles.moistSetup
+import setupfiles.gardenSetup
+import setupfiles.tempSetup
+import setupfiles.timer
+import pprint, json
 
 list1 = []
 list2 = []
 goodAnswers = ['y', 'Y', 'yes', 'Yes', 'YES']
 boolStop = False
 
+def printConfig():
+    with open("config.json", "r") as f:
+        data = json.load(f)
+    f.close()
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(data)        
 
-
-#start registration process
+# start registration process
 if os.path.isfile("./config.json") == False:
     print("****************************************WARNING****************************************")
     print("No existing setup detected")
@@ -38,11 +45,23 @@ elif(answer == "3"):
 elif(answer == "4"):
     setupfiles.gardenSetup.addGarden()
 elif(answer == "5"):
-	setupfiles.gardenSetup.removeGarden()
+    setupfiles.gardenSetup.removeGarden()
 elif(answer == "6"):
-	//setupfiles.garden
+    setupfiles.gardenSetup.addNewSensor('moist')
+elif(answer == "7"):
+    setupfiles.moistSetup.removeSensor()
+elif(answer == "8"):
+    setupfiles.gardenSetup.addNewSensor('temp')
+elif(answer == "9"):
+    setupfiles.tempSetup.removeSensor()
+elif(answer =="10"):
+    printConfig()
+elif(answer =="11"):
+    setupfiles.timer.scheduleJob()
 else:
     print("invalid input")
     
 print 'Goodbye'
 exit()
+
+

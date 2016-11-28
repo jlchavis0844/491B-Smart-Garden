@@ -26,14 +26,14 @@ def peek(iterable):
 
 def scheduleJob():
     cron = CronTab(user=True)
-    currentjobs = cron.find_command('takeReadings')
+    currentjobs = cron.find_command('job')
     res = peek(currentjobs)
     if res is None:
         makeJobs()
     else:
         print("Aleady configured to take the following readings")
         print("min hr * * * command")
-        currentjobs = cron.find_command('takeReadings')
+        currentjobs = cron.find_command('job')
         for job in currentjobs:
             print(job)
         
@@ -88,4 +88,4 @@ def makeJobs():
         job.setall(time)
         cron.write()
         print('*************************Scedule saved**************************')
-	
+    
