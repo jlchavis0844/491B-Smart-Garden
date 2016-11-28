@@ -1,0 +1,89 @@
+<div class="row-box">
+  <ul class="nav row-container-2">
+    <li ng-class="{ active: isTab(1) }">
+      <a href ng-click="setTab(1)">Register</a>
+    </li>
+    <li ng-class="{ active: isTab(2) }">
+      <a href ng-click="setTab(2)">Add Garden</a>
+    </li>
+    <li ng-class="{ active: isTab(3) }">
+      <a href ng-click="setTab(3)">Add Sensor</a>
+    </li>
+  </ul>
+
+
+  <div class="row-container-8">
+      <div ng-show="isTab(1)">
+        <h1>Register</h1>
+        <form class="pure-form pure-form-aligned" name="regist">
+          <fieldset>
+            <div class="pure-control-group">
+              <label>User name</label>
+              <input name="user" ng-model="user" placeholder="User name"
+              type="text" required>
+            </div>
+            <div class="pure-control-group">
+              <label>Password</label>
+              <input name="password" type="password" ng-model="password" placeholder="Password" required>
+            </div>
+            <div class="pure-controls">
+              <button type="submit" class="btn btn-2 btn-2a" ng-click="register()">Submit</button>
+            </div>
+          </fieldset>
+        </form>
+        <h2>{{response}}</h2>
+      </div>
+
+      <div ng-show="isTab(2)">
+        <h1>Add Garden</h1>
+        <form class="pure-form pure-form-aligned" name="addgarden">
+          <fieldset>
+            <div class="pure-control-group">
+              <label>User name</label>
+              <input name="user" ng-model="user" placeholder="User name" required>
+            </div>
+            <div class="pure-control-group">
+              <label>Password</label>
+              <input  name="password" type="password" ng-model="password" placeholder="Password" required>
+            </div>
+            <div class="pure-control-group">
+              <label>Garden Name</label>
+              <input name="garden" ng-model="garden" placeholder="Garden Name" required>
+            </div>
+            <div class="pure-controls">
+              <button type="submit" class="btn btn-2 btn-2a" ng-click="addGarden()">Submit</button>
+            </div>
+          </fieldset>
+        </form>
+        <h2>{{response}}</h2>
+      </div>
+
+      <div ng-show="isTab(3)">
+        <h1>Add Sensor</h1>
+        <form class="pure-form pure-form-aligned" name="addsensor">
+          <fieldset>
+            <div class="pure-control-group">
+              <label>User name</label>
+              <input name="user" ng-model="user" placeholder="User name" required>
+            </div>
+            <div class="pure-control-group">
+              <label>Password</label>
+              <input name="password" type="password" ng-model="password" placeholder="Password" required>
+            </div>
+            <div class="pure-control-group">
+              <label>Garden Name</label>
+              <input name="garden" ng-model="garden" placeholder="Garden Name" required>
+            </div>
+            <div class="pure-control-group">
+              <label>Sensor Name</label>
+              <input name="sensor" ng-model="sensor" placeholder="Sensor Name" required>
+            </div>
+            <div class="pure-controls">
+              <button type="submit" class="btn btn-2 btn-2a" ng-click="addSensor()">Submit</button>
+            </div>
+          </fieldset>
+        </form>
+        <h2>{{response}}</h2>
+      </div>
+  </div>
+</div>

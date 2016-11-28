@@ -46,11 +46,11 @@ app.controller("moistureController",[ '$scope' ,function($scope){
       text : "Moisture"
     }
 };
-$scope.data = new Array();
+  $scope.data = [{key:"",values:[]}];
 
-$scope.$on('moistureTransfer',function(event, data){
-  saveData(data);
-});
+  $scope.$on('moistureTransfer',function(event, data){
+    saveData(data);
+  });
 
 function saveData(moistureArray){
   $scope.data = [];
@@ -67,10 +67,32 @@ function saveData(moistureArray){
         values:[{x:new Date(moistureArray[i].timeStamp), y:parseInt(moistureArray[i].moisture)}]});
     }
   }
-  $scope.options.chart.height = 450;
+  for (i = 0; i < $scope.data.length;i++){
+    fillDataGap($scope.data[i].values,$scope.data[i].values.length,i);
+  }
   $scope.options.chart.width = window.innerWidth - 100;
 };
 
+function fillDataGap(incomingData,dataLength,order){
+  var minDate = new Date(incomingData[0].x).getTime();
+  var maxDate = new Date(incomingData[dataLength-1].x).getTime();
+  var currentDate = minDate;
+  var midPoint,change = true;
+  d = new Date(currentDate);
+  while(change){
+    change = false;
+    var lengthOfData = $scope.data[order].values.length;
+    for(j = 0; j < lengthOfData-1;j++){
+      if($scope.data[order].values[j+1].x.getTime() - $scope.data[order].values[j].x.getTime() > (24 * 60 * 60 * 1000)/4){
+        midPointX = $scope.data[order].values[j].x.getTime() + ($scope.data[order].values[j+1].x.getTime() - $scope.data[order].values[j].x.getTime()) / 2;
+        midPointY = ($scope.data[order].values[j+1].y + $scope.data[order].values[j].y) / 2;
+        $scope.data[order].values.push({x:new Date(midPointX), y: midPointY});
+        change = true;
+      }
+    }
+    $scope.data[order].values.sort(function(a,b){return a.x.getTime() - b.x.getTime()});
+  }
+}
 
 }]);
 
@@ -123,18 +145,12 @@ app.controller("tempController",[ '$scope' ,function($scope){
   }
 };
 
-  $scope.data = new Array();
+  $scope.data = [{key:"",values:[]}];
 
-  $scope.$on('tempTransfer',function(event, data){
-    saveTempData(data);
-    refreshCharts();
+
+  $scope.$on('tempTransfer',function(event, incomingData){
+    saveTempData(incomingData);
   });
-
-  function refreshCharts () {
-            for (var i = 0; i < nv.graphs.length; i++) {
-                nv.graphs[i].update();
-            }
-        };
 
   function saveTempData(tempArray){
     $scope.data = [];
@@ -151,13 +167,37 @@ app.controller("tempController",[ '$scope' ,function($scope){
           values:[{x:new Date(tempArray[i].timeStamp), y:parseInt(tempArray[i].temp)}]});
       }
     }
+    for (i = 0; i < $scope.data.length;i++){
+      fillDataGap($scope.data[i].values,$scope.data[i].values.length,i);
+    }
     $scope.options.chart.width = window.innerWidth - 100;
   };
+
+  function fillDataGap(incomingData,dataLength,order){
+    var minDate = new Date(incomingData[0].x).getTime();
+    var maxDate = new Date(incomingData[dataLength-1].x).getTime();
+    var currentDate = minDate;
+    var midPoint,change = true;
+    d = new Date(currentDate);
+    while(change){
+      change = false;
+      var lengthOfData = $scope.data[order].values.length;
+      for(j = 0; j < lengthOfData-1;j++){
+        if($scope.data[order].values[j+1].x.getTime() - $scope.data[order].values[j].x.getTime() > (24 * 60 * 60 * 1000)/4){
+          midPointX = $scope.data[order].values[j].x.getTime() + ($scope.data[order].values[j+1].x.getTime() - $scope.data[order].values[j].x.getTime()) / 2;
+          midPointY = ($scope.data[order].values[j+1].y + $scope.data[order].values[j].y) / 2;
+          $scope.data[order].values.push({x:new Date(midPointX), y: midPointY});
+          change = true;
+        }
+      }
+      $scope.data[order].values.sort(function(a,b){return a.x.getTime() - b.x.getTime()});
+    }
+  }
 
 
 }]);
 
-app.controller("humidityController",[ '$scope' ,function($scope){
+app.controller("humidityController",[ '$scope' ,function($scope, _){
   $scope.options = {
   chart: {
       type: 'lineWithFocusChart',
@@ -201,7 +241,7 @@ app.controller("humidityController",[ '$scope' ,function($scope){
   }
 }
 
-  $scope.data = new Array();
+  $scope.data = [{key:"",values:[]}];
 
   $scope.$on('humidityTransfer',function(event, data){
     saveHumanityData(data);
@@ -222,94 +262,32 @@ app.controller("humidityController",[ '$scope' ,function($scope){
           values:[{x:new Date(humidityArray[i].timeStamp), y:parseInt(humidityArray[i].humidity)}]});
       }
     }
+    for (i = 0; i < $scope.data.length;i++){
+      fillDataGap($scope.data[i].values,$scope.data[i].values.length,i);
+    }
     $scope.options.chart.width = window.innerWidth - 100;
+  }
+
+  function fillDataGap(incomingData,dataLength,order){
+    var minDate = new Date(incomingData[0].x).getTime();
+    var maxDate = new Date(incomingData[dataLength-1].x).getTime();
+    var currentDate = minDate;
+    var midPoint,change = true;
+    d = new Date(currentDate);
+    while(change){
+      change = false;
+      var lengthOfData = $scope.data[order].values.length;
+      for(j = 0; j < lengthOfData-1;j++){
+        if($scope.data[order].values[j+1].x.getTime() - $scope.data[order].values[j].x.getTime() > (24 * 60 * 60 * 1000)/4){
+          midPointX = $scope.data[order].values[j].x.getTime() + ($scope.data[order].values[j+1].x.getTime() - $scope.data[order].values[j].x.getTime()) / 2;
+          midPointY = ($scope.data[order].values[j+1].y + $scope.data[order].values[j].y) / 2;
+          $scope.data[order].values.push({x:new Date(midPointX), y: midPointY});
+          change = true;
+        }
+      }
+      $scope.data[order].values.sort(function(a,b){return a.x.getTime() - b.x.getTime()});
+    }
   }
 
 
 }]);
-
-
-/*
-$scope.data = [{
-  key: "Sample1",
-  values: [{ x: 1, y:2 },{x:2,y:3},{x:3,y:10}]},
-{
-  key: "Sample2",
-  values: [{x:1,y:3}, {x:2, y:7}, {x:3,y:9}]
-}
-];*/
-
-
-/*
-$scope.data = [];
-
-$scope.$on('tempTransfer',function(event, data){
-  console.log("sended");
-  console.log(data);
-  saveData(data);
-});
-
-function saveData(tempArray){
-  $scope.data = [];
-  for (i = 0; i < tempArray.length;i++){
-    var flag = true;
-    for (j = 0; j < $scope.data.length; j++){
-      if($scope.data[j].key == tempArray[i].sensorName){
-        $scope.data[j].values.push({x:new Date(tempArray[i].timeStamp), y:parseInt(tempArray[i].temp)});
-        flag = false;
-      }
-    }
-    if (flag){
-      $scope.data.push({key: tempArray[i].sensorName,
-        values:[{x:new Date(tempArray[i].timeStamp), y:parseInt(tempArray[i].temp)}]});
-    }
-  }
-  console.log($scope.data);
-};*/
-
-/*
-$scope.data = new Array();
-
-$scope.$on('tempTransfer',function(event, data){
-  console.log("sended");
-  saveTempData(data);
-  saveHumanityData(data);
-});
-
-function saveTempData(tempArray){
-  $scope.data = [];
-  for (i = 0; i < tempArray.length;i++){
-    var flag = true;
-    for (j = 0; j < $scope.data.length; j++){
-      if($scope.data[j].key == tempArray[i].sensorName){
-        $scope.data[j].values.push({x:new Date(tempArray[i].timeStamp), y:parseInt(tempArray[i].temp)});
-        flag = false;
-      }
-    }
-    if (flag){
-      $scope.data.push({key: tempArray[i].sensorName,
-        values:[{x:new Date(tempArray[i].timeStamp), y:parseInt(tempArray[i].temp)}]});
-      $scope.data[$scope.data.length-1].type = "line";
-      $scope.data[$scope.data.length-1].yAxis = 1;
-    }
-  }
-  console.log($scope.data);
-};
-
-function saveHumanityData(humidityArray){
-  for (i = 0; i < humidityArray.length;i++){
-    var flag = true;
-    for (j = 0; j < $scope.data.length; j++){
-      if($scope.data[j].key == (humidityArray[i].sensorName+ " Humidity")){
-        $scope.data[j].values.push({x:new Date(humidityArray[i].timeStamp), y:parseInt(humidityArray[i].humidity)});
-        flag = false;
-      }
-    }
-    if (flag){
-      $scope.data.push({key: (humidityArray[i].sensorName + " Humidity"),
-        values:[{x:new Date(humidityArray[i].timeStamp), y:parseInt(humidityArray[i].humidity)}]});
-      $scope.data[$scope.data.length-1].type = "line";
-      $scope.data[$scope.data.length-1].yAxis = 2;
-    }
-  }
-};*/

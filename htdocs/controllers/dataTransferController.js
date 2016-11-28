@@ -9,7 +9,7 @@ app.controller("dataTransferController", [ '$scope', '$http' , function ($scope,
 		var endDate = new Date($scope.date);
 		var startDate = new Date();
 
-		if(!$scope.myform.user.$error.required && !$scope.myform.password.$error.required && !$scope.myform.name.$error.required)
+		if(!$scope.myform.user.$error.required && !$scope.myform.password.$error.required && !$scope.myform.gardenName.$error.required)
 		{
 			if ($scope.period == "Year"){
 				startDate.setDate(endDate.getDate() - 365);
@@ -54,7 +54,6 @@ app.controller("dataTransferController", [ '$scope', '$http' , function ($scope,
 							}
 						}
 						if (moistureArray.length != 0){
-							console.log(moistureArray);
 							$scope.moistGraph = true;
 							$scope.$broadcast('moistureTransfer',moistureArray);
 						}

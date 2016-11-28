@@ -15,12 +15,12 @@ body {
 }
 .notCurrent
 {
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .communityRow
 {
-    text-align:center; 
+    text-align:center;
     vertical-align:middle;
     border-bottom: 2px solid lightskyblue;
     border-top: 2px solid lightskyblue;
@@ -57,8 +57,8 @@ body {
 /* Large Devices, Narrow Screens */
 @media only screen and (max-width : 1600px) {
     .container {
-        padding-top: 5%;
-    }   
+        /*padding-top: 5%;*/
+    }
 }
 
 /* Medium Devices, Desktops */
@@ -66,11 +66,11 @@ body {
     .container {
         padding-top: 25%;
     }
-    
+
     .container img {
         float: right;
         min-width: 10%;
-    }  
+    }
 }
 
 /* Small Devices, Tablets */
@@ -84,6 +84,34 @@ body {
     border: solid 2px #69b779;
     padding: 10px;
     margin: 5px;
+}
+
+.br-5 {
+    border-radius: 5px;
+}
+
+.row-box {
+    width: 100%;
+}
+
+.row-container-2 {
+    display: inline-block;
+    vertical-align: top;
+    background: #eec;
+    width: 20%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.row-container-8 {
+    display: inline-block;
+    background: #eec;
+    width: 75%;
+    height: 100%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
 }
 
 .nav-container {
@@ -602,7 +630,7 @@ figure.effect-bot-right:hover p {
 }
 
 .plantTableStyles tr:hover td{
-	
+
 }
 
 .plantTableStyles tr:nth-child(odd){ background-color:#b3e5bd; }
@@ -632,7 +660,7 @@ figure.effect-bot-right:hover p {
 }
 
 .plantTableStyles tr:first-child td{
-    background:-o-linear-gradient(bottom, #69b779 5%, #69b779 100%);	
+    background:-o-linear-gradient(bottom, #69b779 5%, #69b779 100%);
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #69b779), color-stop(1, #69b779) );
     background:-moz-linear-gradient( center top, #69b779 5%, #69b779 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#69b779", endColorstr="#69b779");

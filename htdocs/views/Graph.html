@@ -2,9 +2,9 @@
     <h1>Statistics Report</h1>
     <form class="pure-form pure-form-aligned" name="myform">
         <fieldset>
-            <div class="pure-control-group">
+            <div class="pure-control-group ">
                 <label>User Name</label>
-                <input name="user" ng-model="user"  ng-model="username" placeholder="User name" type="text" id="user" required/>
+                <input name="user" ng-model="user" placeholder="User name" type="text" id="user" required/>
             </div>
             <div class="pure-control-group">
                 <label>Password</label>
@@ -12,7 +12,7 @@
             </div>
             <div class="pure-control-group">
                 <label>Garden</label>
-                <input name="name" ng-model="gardenName" placeholder="Garden name" type="text" id="name" required/>
+                <input name="gardenName" ng-model="gardenName" placeholder="Garden name" type="text" id="name" required/>
             </div>
             <div class = "pure-control-group">
                 <label>Date</label>
@@ -37,14 +37,14 @@
       </div>
 
       <div ng-app="myApp" ng-controller="moistureController" ng-show="moistGraph">
-        <nvd3 options="options" data = data></nvd3>
+        <nvd3 options="options" data = "data"></nvd3>
       </div>
       <div ng-app="myApp" ng-controller="tempController" ng-show="tempGraph">
-        <nvd3 options="options" data = data></nvd3>
+        <nvd3 options="options" data = "data"></nvd3>
       </div>
 
       <div ng-app="myApp" ng-controller="humidityController" ng-show="tempGraph">
-        <nvd3 options="options" data = data></nvd3>
+        <nvd3 options="options" data = "data"></nvd3>
       </div>
 
 </div>

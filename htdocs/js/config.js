@@ -33,6 +33,10 @@ app.config(['$routeProvider',
             when('/Support', {
                 templateUrl: 'views/Support.html'
             }).
+            when('/Account',{
+                templateUrl: 'views/Account.html',
+                controller: 'accountController'
+            }).
             when('/Graph', {
                 templateUrl: 'views/Graph.html',
                 controller: 'dataTransferController'
