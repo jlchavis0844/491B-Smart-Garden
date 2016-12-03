@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os.path  # file check
 import setupfiles.fullSetup
 import setupfiles.moistSetup
@@ -34,6 +35,7 @@ print("8 - Add a temperature  sensor")
 print("9 - Delete a temperature  sensor")
 print("10 - view configuration file")
 print("11 - view/change scheduled readings")
+print("12 - Exit the Setup Menu")
 answer = raw_input("Choose one of the following options\n")
 
 if(answer == "1"):

@@ -1,8 +1,4 @@
-'''
-Created on Oct 24, 2016
-
-@author: James
-'''
+#!/usr/bin/env python
 import Adafruit_GPIO.SPI #software SPI import
 import Adafruit_MCP3008 #for the Digital to Analog converter
 import Adafruit_DHT #for the temp sensor
@@ -12,31 +8,31 @@ import json # for sending data
 import urllib2 #for php calls
 import Config 
 import simplejson
-global myConf
+import time
 myConf= Config.Config() # load configuration file
 
 def configCheck():
-    url = "http://jchavis.hopto.org:49180/ConfigCheck.php?user="+ myConf.getUser()
-    url += "&password="+ myConf.getPassword() + "&localDate=" 
-    #url += myConf.getUpdateDate().replace(" ", "%20")
-    url += "2016-10-17 13:14:15".replace(" ", "%20")
+	url = "http://jchavis.hopto.org:49180/ConfigCheck.php?user="+ myConf.getUser()
+	url += "&password="+ myConf.getPassword() + "&localDate=" 
+	url += myConf.getUpdateDate().replace(" ", "%20")
+	#url += "2016-10-17 13:14:15".replace(" ", "%20")
 
-    print('calling ' + url)
-    resp = urllib2.urlopen(urllib2.Request(url))#make PHP call
-    #print(resp.read())
-    json_data = json.load(resp)
-    print(json_data)
+	print('calling ' + url)
+	resp = urllib2.urlopen(urllib2.Request(url))#make PHP call
+	#print(resp.read())
+	json_data = json.load(resp)
+	print(json_data)
 
-    if(json_data):
-        print("New JSON found, saving...")
-        with open("config.json", "w") as f:
-            f.write(json_data)
+	if(json_data):
+		print("New JSON found, saving...")
+		with open("config.json", "w") as f:
+			f.write(json_data)
 
-        global myConf
-        myConf = Config.Config()
+		global myConf
+		myConf = Config.Config()
 
-    else:
-        print("no new data")
+	else:
+		print("no new data")
 
 configCheck()
 #DHT declerations
@@ -57,7 +53,7 @@ mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI) #combine MC
 
 #ready digital pin
 GPIO.setmode(GPIO.BCM)#set board type (BCM or BOARD)
-GPIO.setup(12,GPIO.IN)#mark pin as input
+#GPIO.setup(12,GPIO.IN)#mark pin as input
 
 #read in log in info
 userName = myConf.getUser() #read in user name
@@ -70,6 +66,8 @@ humReadings = []
 moistReadings = []
 tempResponses = []
 moistReponses = []
+moistLimits = []
+
 
 #flips the bit values of the read in rate
 def invert(number):
@@ -96,17 +94,19 @@ def readTemps(index):
             print('Failed to get reading.')
 
 #will take the moisture readings
-def getMoist(index): #;0)
+def getMoist(index):
     moistChans = myConf.getMoistChan(index)
 
     for x in moistChans:
-        print "trying to read " + x
-        moisture = invert(mcp.read_adc(int(x)))#get readings
-        moistReadings.append(moisture)#store to end of list
+    	print "trying to read " + x
+    	#moistNum = moistLimits[int(x)]
+    	#print("**********************************" + str(moistNum))
+    	moisture = invert(mcp.read_adc(int(x)))#get readings
+    	moistReadings.append(moisture)#store to end of list
 
 #writes the given line to the log file
 def writeToLog(writeData):
-    fo = open("log.txt", "a")
+    fo = open("log.txt", "ab")
     for curr in writeData:
         fo.write(curr + ' ' + timeStamp + '\n')
 
@@ -143,9 +143,57 @@ def sendMoistTemps(index):
             moistReponses.append(strData + ' ' + resp.read())#store reponse
     print(moistReponses)#print all responses
     writeToLog(moistReponses)
+        
+#pump pin
+#just call Pump() whenever the moisture level gets below the set value
+def Pump(seconds):
+
+   # GPIO.cleanup()
+   # GPIO.setmode(GPIO.BOARD)
+    GPIO_PIN = 21
+    GPIO.setup(GPIO_PIN, GPIO.OUT)
+
+# Send a signal to the relay
+    def SendSignal():
+        try:
+            GPIO.output(GPIO_PIN, GPIO.HIGH)
+            print("After high call")
+            time.sleep(seconds)
+            GPIO.output(GPIO_PIN, GPIO.LOW)
+	    print("After low call")
+        except:
+            print ("Something wrong")
+            pass
+
+    SendSignal()
+    print("Signal was called")
+    GPIO.cleanup()
+
+#same variables current is currently measured moisture
+#user defined moisture limit can place signal processing here to start pump
+def checkWater(mLimit, seconds, current):
+    if(current < mLimit):
+        #possible way to keep track of watering cycles/ water usage
+        #send the signal to the pump
+        #and a bit to the database to show it was watered that day
+        #watering time also goes here, a timer to be able to dispense 
+        #a certain amount of water
+        print("watering")
+        Pump(seconds)
+    else:
+        print("no water needed")
+        
 
 for i in range(len(myConf.getGardenNames())):
     readTemps(i)#get temperature and humidity readings
     getMoist(i)# get moisture readings
     sendTempReadings(i)#send the temp/humid readings
     sendMoistTemps(i)#send moisture readings
+for m in range(len(myConf.getGardenNames())):
+        tempList = myConf.getMoistLimit(m)
+        for j in tempList:
+                moistLimits.append(j)
+        print(moistLimits)
+for k in range(len(moistLimits)):
+	checkWater(moistLimits[k], 3, moistReadings[k])
+
