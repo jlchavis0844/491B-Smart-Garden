@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/configure" />
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_widget"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/appwidget_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true"
+            android:text="Username" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Password"
+            android:ems="10"
+            android:layout_below="@+id/appwidget_text"
+            android:layout_alignParentStart="true"
+            android:id="@+id/editText4" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Garden Name"
+            android:ems="10"
+            android:layout_below="@+id/editText4"
+            android:layout_alignEnd="@+id/editText4"
+            android:id="@+id/editText5" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Moisture Sensor"
+            android:ems="10"
+            android:layout_below="@+id/editText5"
+            android:layout_alignEnd="@+id/editText5"
+            android:id="@+id/editText6" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Temperature Sensor"
+            android:ems="10"
+            android:layout_below="@+id/editText6"
+            android:layout_alignParentStart="true"
+            android:id="@+id/editText7" />
+    </RelativeLayout>
+
+</LinearLayout>
