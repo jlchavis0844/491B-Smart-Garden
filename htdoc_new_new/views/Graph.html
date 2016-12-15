@@ -1,0 +1,50 @@
+<div ng-app="myApp" ng-controller="dataTransferController">
+    <h1>Statistics Report</h1>
+    <form class="pure-form pure-form-aligned" name="myform">
+        <fieldset>
+            <div class="pure-control-group ">
+                <label>User Name</label>
+                <input name="user" ng-model="user" placeholder="User name" type="text" id="user" required/>
+            </div>
+            <div class="pure-control-group">
+                <label>Password</label>
+                <input name="password" ng-model="password" placeholder="Password" type="password" id="password" required/>
+            </div>
+            <div class="pure-control-group">
+                <label>Garden</label>
+                <input name="gardenName" ng-model="gardenName" placeholder="Garden name" type="text" id="name" required/>
+            </div>
+            <div class = "pure-control-group">
+                <label>Date</label>
+                <input name="max" ng-model="date" type="date" id="date">
+            </div>
+            <div class = "pure-control-group">
+                <label>Peroid</label>
+                <input type="radio" ng-model="period" value = "Year" checked>Year<br>
+                <label></label>
+                <input type="radio" ng-model="period" value = "Month">Month<br>
+                <label></label>
+                <input type="radio" ng-model="period" value = "Week">Week<br>
+            </div>
+
+            <div class="pure-controls">
+                <button type="submit" class="btn btn-2 btn-2a" ng-click="getReport()">Submit!</button>
+            </div>
+        </fieldset>
+    </form>
+      <div ng-model="error" ng-show="errorMessage">
+        <h2 style="color:red;">{{responseMessage}}</h2>
+      </div>
+
+      <div ng-app="myApp" ng-controller="moistureController" ng-show="moistGraph">
+        <nvd3 options="options" data = "data"></nvd3>
+      </div>
+      <div ng-app="myApp" ng-controller="tempController" ng-show="tempGraph">
+        <nvd3 options="options" data = "data"></nvd3>
+      </div>
+
+      <div ng-app="myApp" ng-controller="humidityController" ng-show="tempGraph">
+        <nvd3 options="options" data = "data"></nvd3>
+      </div>
+
+</div>

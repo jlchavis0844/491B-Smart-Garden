@@ -1,0 +1,32 @@
+<h2 align="center">Harvest Data</h2>
+
+<input type="text" 
+       uib-datepicker-popup="dd-MMMM-yyyy"
+       ng-model="startDate" 
+       is-open="startDateShow"
+       close-text="Close"
+       show-button-bar='false'
+       readonly/>
+<button type="button" ng-click="startDateOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+
+<input type="text" 
+       uib-datepicker-popup="dd-MMMM-yyyy"
+       ng-model="endDate" 
+       is-open="endDateShow"
+       close-text="Close"
+       show-button-bar='false'
+       readonly/>
+<button type="button" ng-click="endDateOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+
+<select ng-model = "harvestIndex" ng-change = "selected(harvestIndex)">
+    <option ng-repeat = "harvest in harvestComments track by $index" value = "{{$index}}" selected > Harvest {{$index+1}}</option> 
+</select>
+
+<p><br>Harvest Comment: {{harvestComments[harvestIndex]}}</p>
+
+<nvd3 options="options1" data="data1" class="with-3d-shadow with-transitions"></nvd3><br>
+<h2 align="center">Watering Times</h2>
+<nvd3 options="options2" data="data2" class="with-3d-shadow with-transitions"></nvd3><br>
+<h2 align="center">Total Water Consumption</h2>
+<nvd3 options="options3" data="data3" class="with-3d-shadow with-transitions"></nvd3>
+

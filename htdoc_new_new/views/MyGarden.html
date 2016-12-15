@@ -1,0 +1,62 @@
+<h1>Welcome {{username}}!</h1>
+
+<div class="col-lg-6 col-md-6">
+    
+    <h3>My Active Plant</h3>
+    <div class="row">
+        <div class="col-lg-3">            
+            <justgage title="Temperature" value="{{temperature}}" min="0" max='110'></justgage>
+        </div>
+        <div class="col-lg-3">            
+            <justgage title="Humidity" value="{{humidity}}" min="0" max='100'></justgage>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">            
+            <justgage title="Moisture" value="{{moisture}}" min="0" max='600'></justgage>
+        </div>
+        <div class="col-lg-3">
+            <justgage title="Light" value="{{light}}" min="0" max='700'></justgage>            
+        </div>
+    </div>
+    
+    <p ng-if="!watering">
+        <button class="btn btn-2 btn-2a" ng-click="waterPlants()">Water Plant</button>
+    </p>
+    <p ng-if="watering">watering...</p>
+</div>
+
+<div class="col-lg-6 col-md-6">
+<h3>My Plants</h3>
+
+    <div class="plantTableStyles" >
+        <table>
+            <tr>
+                <td>
+                    Plant Name
+                </td>
+                <td >
+                    Type
+                </td>
+                <td>
+                    <!-- empty just to give buttons a column -->
+                </td>
+            </tr>
+            <tr ng-repeat = "plant in plants">
+                <td >
+                    {{plant.plantName}}
+                </td>
+                <td>
+                    {{plant.plantType}}
+                </td>
+                <td>                    
+                    <a class="btn btn-2 btn-2a" href="#/EditPlant/{{plant.objectId}}">Edit</a>
+                    <button class="btn btn-2 btn-2a" ng-click="Graph(plant.objectId)">Graph</button>
+                </td>
+            </tr> 
+        </table>
+    </div>
+
+    <button class="btn btn-2 btn-2a" ng-click="newPlant()">Add New Plant</button>
+    
+</div>

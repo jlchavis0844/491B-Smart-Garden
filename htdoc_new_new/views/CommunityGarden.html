@@ -1,0 +1,44 @@
+<h1>Community Garden</h1>
+<form class="pure-form">
+    <fieldset>
+        <label>Search</label>
+        <input type ="text" id = "query"/>
+        <button type="submit" class="btn btn-2 btn-2a" ng-click="search()">Submit</button>
+    </fieldset>
+</form>
+
+<h2>Plants</h2>
+<div class="plantTableStyles" >
+    <table>
+        <tr>
+            <td>
+                Plant Name
+            </td>
+            <td >
+                Type
+            </td>
+            <td>
+                Plant Owner
+            </td>
+            <td>
+                <!-- blank because of reasons -->
+            </td>
+        </tr>
+        <tr ng-repeat = "plant in plants">
+            <td >
+                {{plant.plantName}}
+            </td>
+            <td>
+                {{plant.plantType}}
+            </td>
+            <td>                    
+                {{plant.user}}
+            </td>
+            <td>
+                <button class="btn btn-2 btn-2a" ng-click="navigateToGraph(plant.objectId)">View Data</button>
+            </td>
+        </tr> 
+    </table>
+</div>
+
+<button class="btn btn-2 btn-2a" ng-show="page-1" type="button" ng-click ="previous()">Prev</button>&nbsp&nbsp<span ng-repeat = "i in getNumber() track by $index"><a ng-click = "goTo(i)" ng-class = isThisCurrentPage(i)>{{i}}</a>&nbsp&nbsp&nbsp&nbsp</span>&nbsp&nbsp<button class="btn btn-2 btn-2a" ng-click ="next()" ng-show = "end()">Next</button>

@@ -1,0 +1,70 @@
+<div class="col-lg-6 col-md-6">
+    <h3>Edit Plant</h3>
+    <form class="pure-form pure-form-aligned" ng-model="editPlantForm" name="editPlantForm" novalidate class="css-form">
+        <fieldset>
+            <div class="pure-control-group">
+                <label>Plant Name</label>
+                <input required name="plantName" type="text" ng-model="plant.plantName" />
+                <span ng-show="editPlantForm.$submitted || editPlantForm.plantName.$touched">
+                    <span style="color:green" ng-show="editPlantForm.plantName.$valid">
+                        &#10003; <!-- unicode checkmark -->
+                    </span>
+                    <span style="color:red" ng-show="editPlantForm.plantName.$invalid">
+                        Plant name cannot be empty.
+                    </span>            
+                </span>
+            </div>
+            <div class="pure-control-group">
+                <label>Plant Type</label>
+                <input type="text" ng-model="plant.plantType" uib-typeahead="vegetable for vegetable in vegetables | filter:$viewValue | limitTo:8" />
+            </div>
+            <div class="pure-control-group">
+                <label>Water Amount (gal.)</label>                
+                <rzslider rz-slider-model="plant.waterAmount" rz-slider-options="waterOptions"/>                
+            </div>            
+            <div class="pure-control-group">
+                <label>Moisture Limit</label>
+                <!--<input required min="0" max="700" name="moistureLimit" type="number" ng-model = "plant.moistureLimit"/>-->
+                <rzslider rz-slider-model="plant.moistureLimit" rz-slider-options="moistureOptions"/>                
+            </div>
+
+            <div class="pure-controls">
+                <label class="pure-checkbox">
+                    <input type="checkbox" ng-model = "plant.inUse" /> Make Active
+                </label>
+                <label class="pure-checkbox">
+                    <input type="checkbox" ng-model = "plant.ACL['*'].read" /> Make Public
+                </label>
+
+                <button type="submit" class="btn btn-2 btn-2a" ng-click="Done()">Done!</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <button ng-show="!newPlant" class="btn btn-2 btn-2a" ng-click="Delete()">Delete Plant</button>
+</div>
+
+<div class="col-lg-6 col-md-6">
+    <div class="plantTableStyles" >
+        <table>
+            <tr>
+                <td>
+                    Harvests: {{plant.harvests.length}}
+                </td>
+                <td>
+                    <!-- empty because of reasons -->
+                </td>
+            </tr>
+            <tr ng-repeat = "harvest in plant.harvests track by $index">
+                <td >
+                    {{formatHarvest($index)}}
+                </td>
+                <td>                    
+                    <button class="btn btn-2 btn-2a" ng-click="editHarvest($index)">Edit</button>
+                </td>
+            </tr> 
+        </table>
+    </div>
+
+    <button ng-show="!newPlant" class="btn btn-2 btn-2a" ng-click="editHarvest()" value="New Harvest">New Harvest</button>
+</div>
